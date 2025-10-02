@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ежедневник</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="statusbar" id="statusbar">
+        <div class="datetime-container">
+          <div class="info-box">
+            <h1>Ежедневник</h1>
+            <div class="date-section">
+              <div class="date-day-month">
+                <div class="weekday" id="weekday"></div>
+                <div class="day" id="day"></div>
+                <div class="month" id="month"></div>
+                <div class="year" id="year"></div>
+              </div>
+              <div class="time-section">
+                <div class="time" id="time"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lock-button">
+          <button class="btn btn-text ripple" id="lockButton">
+            <span id="lockLabel">Заблокировать</span>
+            <span class="material-icons" id="lockIcon">lock</span>
+          </button>
+        </div>
+
+        <!-- Погода -->
+        <div class="weather-card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span class="material-icons">cloud</span>
+              Погода
+            </h2>
+            <button class="btn btn-text ripple" id="refreshWeather">
+              <span class="material-icons">refresh</span>
+            </button>
+          </div>
+          <div class="weather-content">
+            <div class="weather-main">
+              <div class="weather-icon">
+                <span class="material-icons" id="weatherIcon">wb_sunny</span>
+                <div class="weather-temp" id="weatherTemp">--°</div>
+              </div>
+              <div class="weather-info">
+                <div class="weather-desc" id="weatherDesc">Загрузка...</div>
+              </div>
+            </div>
+            <div class="weather-details hide">
+              <div class="weather-detail">
+                <span class="material-icons">air</span>
+                <span>Влажность: <span id="weatherHumidity">--%</span></span>
+              </div>
+              <div class="weather-detail">
+                <span class="material-icons">compress</span>
+                <span>Давление: <span id="weatherPressure">-- hPa</span></span>
+              </div>
+              <div class="weather-detail">
+                <span class="material-icons">visibility</span>
+                <span
+                  >Видимость: <span id="weatherVisibility">-- km</span></span
+                >
+              </div>
+            </div>
+            <div class="location-input">
+              <div class="weather-input-container">
+                <input
+                  type="text"
+                  id="cityInput"
+                  class="input-field"
+                  placeholder=" "
+                  value="Москва"
+                />
+              </div>
+              <button id="updateLocation" class="btn btn-contained ripple">
+                <span class="material-icons">search</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="app-grid" id="app-grid">
+        <!-- Задачи -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span class="material-icons">check_circle</span>
+              Мои задачи
+            </h2>
+            <div class="card-actions">
+              <button
+                class="btn btn-text ripple"
+                id="filterAll"
+                title="Отфильтровать"
+              >
+                <span class="material-icons">filter_list</span>
+              </button>
+              <button
+                class="btn btn-text ripple"
+                id="clearCompleted"
+                title="Удалить выполненные"
+              >
+                <span class="material-icons">clear_all</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="input-container">
+              <input
+                type="text"
+                id="taskInput"
+                class="input-field"
+                placeholder=" "
+              />
+              <label class="floating-label">Добавить новую задачу</label>
+            </div>
+            <button id="addTaskBtn" class="btn btn-contained ripple">
+              <span class="material-icons">add</span>
+              Добавить
+            </button>
+          </div>
+
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">Все</button>
+            <button class="filter-tab" data-filter="active">Активные</button>
+            <button class="filter-tab" data-filter="completed">
+              Выполненные
+            </button>
+          </div>
+
+          <ul class="task-list" id="taskList">
+            <!-- Задачи будут добавляться здесь -->
+          </ul>
+
+          <div class="stats" id="taskStats">
+            <span>Всего задач: <span id="totalTasks">0</span></span>
+            <span>Выполнено: <span id="completedTasks">0</span></span>
+          </div>
+        </div>
+
+        <!-- Заметки  -->
+        <div class="notes-container">
+          <!-- Заметки -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <span class="material-icons">note</span>
+                Мои заметки
+              </h2>
+              <div class="card-actions">
+                <button class="btn btn-text ripple" id="exportNotes">
+                  <span class="material-icons">download</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-container" style="flex: 1 1 100%">
+                <input
+                  type="text"
+                  id="noteInput"
+                  class="input-field"
+                  placeholder=" "
+                />
+                <label class="floating-label">Добавить новую заметку</label>
+              </div>
+            </div>
+
+            <div style="text-align: right; margin-bottom: 20px">
+              <button id="addNoteBtn" class="btn btn-contained ripple">
+                <span class="material-icons">add</span>
+                Добавить заметку
+              </button>
+            </div>
+
+            <ul class="notes-list" id="notesList">
+              <!-- Заметки будут добавляться здесь -->
+            </ul>
+
+            <div class="stats">
+              <span>Всего заметок: <span id="totalNotes">0</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Кнопки действий -->
+    <button class="fab up-arrow ripple" id="scrollTopBtn">
+      <span class="material-icons">arrow_upward</span>
+    </button>
+
+    <div class="fab-container">
+      <button
+        class="fab small-fab ripple"
+        id="exportDataBtn"
+        title="Экспорт данных"
+      >
+        <span class="material-icons">file_download</span>
+      </button>
+      <button
+        class="fab small-fab ripple"
+        id="importDataBtn"
+        title="Импорт данных"
+      >
+        <span class="material-icons">file_upload</span>
+      </button>
+      <button class="fab small-fab ripple" id="settingsBtn" title="Настройки">
+        <span class="material-icons">settings</span>
+      </button>
+    </div>
+
+    <input type="file" id="importFile" accept=".json" style="display: none" />
+
+    <!-- Уведомления -->
+    <div id="snackbar" class="snackbar">Данные сохранены</div>
+
+    <!-- Модальное окно настроек -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Настройки</h2>
+          <button class="btn btn-text close-modal">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-group">
+            <h3>Тема</h3>
+            <div class="theme-selector">
+              <button class="theme-option active" data-theme="light">
+                <span class="material-icons">light_mode</span>
+                Светлая
+              </button>
+              <button class="theme-option" data-theme="dark">
+                <span class="material-icons">dark_mode</span>
+                Тёмная
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <h3>Уведомления</h3>
+            <label class="switch">
+              <input type="checkbox" id="notificationsToggle" checked />
+              <span class="slider"></span>
+              <span class="switch-label">Включить уведомления</span>
+            </label>
+          </div>
+
+          <div class="setting-group">
+            <h3>Автосохранение</h3>
+            <label class="switch">
+              <input type="checkbox" id="autoSaveToggle" checked />
+              <span class="slider"></span>
+              <span class="switch-label">Автоматическое сохранение</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-contained" id="saveSettings">Сохранить</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

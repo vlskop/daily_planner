@@ -1,0 +1,3 @@
+@echo off
+echo Starting Planner Application...
+start msedge --app="file:///%CD%/index.html"
